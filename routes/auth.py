@@ -1,9 +1,7 @@
-
+"""Authentication routes"""
 from flask import Blueprint, render_template, request, jsonify, session, redirect
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Admin
-from werkzeug.security import generate_password_hash
-from werkzeug.security import check_password_hash
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -13,9 +11,8 @@ auth_bp = Blueprint("auth", __name__)
 # =====================================
 
 def generate_account():
-
+    """Generate unique account number"""
     count = User.query.count()
-
     return f"KW{count + 1:06}"
 
 
@@ -25,44 +22,41 @@ def generate_account():
 
 @auth_bp.route("/")
 def home():
-
+    """Home page"""
     return render_template("index.html")
 
 
 @auth_bp.route("/login-page")
 def login_page():
-
+    """User login page"""
     return render_template("login.html")
 
 
 @auth_bp.route("/register-page")
 def register_page():
-
+    """User registration page"""
     return render_template("register.html")
 
 
 @auth_bp.route("/dashboard")
 def dashboard():
-
+    """User dashboard"""
     if "account" not in session:
-
         return redirect("/login-page")
-
     return render_template("dashboard.html")
 
 
 @auth_bp.route("/admin")
 def admin_dashboard():
-
+    """Admin dashboard"""
     if "admin" not in session:
         return redirect("/admin-login")
-
     return render_template("admin.html")
 
 
 @auth_bp.route("/admin-login")
 def admin_login_page():
-
+    """Admin login page"""
     return render_template("admin_login.html")
 
 
@@ -72,43 +66,41 @@ def admin_login_page():
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
-
+    """Register new user"""
     data = request.json
 
     if not data:
-
         return jsonify({"error": "Invalid request"}), 400
 
     username = data.get("username")
     pin = data.get("pin")
 
     if not username or not pin:
-
         return jsonify({"error": "All fields are required"}), 400
 
+    # Check if user already exists
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return jsonify({"error": "Username already exists"}), 400
+
     user = User(
-    username=username,
-    account=generate_account(),
-    pin=generate_password_hash(pin)
-)
+        username=username,
+        account=generate_account(),
+        pin=generate_password_hash(pin)
+    )
 
     db.session.add(user)
-
     db.session.commit()
 
     return jsonify({
-
         "message": "Account Created",
-
         "account": user.account
-
     })
-
 
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-
+    """User login"""
     data = request.json
 
     if not data:
@@ -123,10 +115,7 @@ def login():
             "error": "Account not found"
         }), 404
 
-    if not check_password_hash(
-        user.pin,
-        data.get("pin")
-    ):
+    if not check_password_hash(user.pin, data.get("pin")):
         return jsonify({
             "error": "Wrong PIN"
         }), 401
@@ -140,11 +129,9 @@ def login():
     })
 
 
-
-
 @auth_bp.route("/admin-login", methods=["POST"])
 def admin_login():
-
+    """Admin login"""
     data = request.get_json()
 
     if not data:
@@ -160,16 +147,15 @@ def admin_login():
             "error": "Username and password are required"
         }), 400
 
-    admin = Admin.query.filter_by(
-        username=username
-    ).first()
+    admin = Admin.query.filter_by(username=username).first()
 
-    # Create default admin if doesn't exist
+    # Create default admin if doesn't exist and correct credentials provided
     if not admin and username == "admin" and password == "admin123":
         admin = Admin(username="admin")
         admin.set_password("admin123")
         db.session.add(admin)
         db.session.commit()
+        session.clear()
         session["admin"] = admin.username
         return jsonify({
             "message": "Admin login successful"
@@ -192,14 +178,13 @@ def admin_login():
         "message": "Admin login successful"
     })
 
+
 # =====================================
 # Logout
 # =====================================
 
 @auth_bp.route("/logout")
 def logout():
-
+    """Logout user/admin"""
     session.clear()
-
     return redirect("/")
-
