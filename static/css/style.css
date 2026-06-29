@@ -1,0 +1,365 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#08131f;
+color:white;
+min-height:100vh;
+}
+
+header{
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#0d1d2d;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#00d4ff;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.primary{
+background:#00d4ff;
+font-weight:bold;
+}
+
+.hero{
+padding:80px 30px;
+text-align:center;
+}
+
+.hero h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+.hero span{
+color:#00d4ff;
+}
+
+.hero p{
+max-width:700px;
+margin:auto;
+margin-bottom:30px;
+}
+
+.dashboard{
+display:none;
+padding:30px;
+max-width:900px;
+margin:auto;
+}
+
+.card{
+background:#10263b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+}
+
+#history{
+margin-top:20px;
+}
+
+.tx{
+background:#173450;
+padding:10px;
+margin:10px 0;
+border-radius:10px;
+}
+
+.hero-image{
+    width:100%;
+    max-width:500px;
+    display:block;
+    margin:30px auto;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,212,255,0.3);
+    transition:0.4s;
+}
+
+.hero-image:hover{
+    transform:scale(1.05);
+}
+
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-bottom:20px;
+}
+
+.card{
+background:#10263b;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,212,255,.15);
+}
+/* Profile Card */
+
+.profile-card{
+    text-align:center;
+}
+
+#profile-photo{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #00d4ff;
+    margin-bottom:15px;
+    box-shadow:0 0 20px rgba(0,212,255,.5);
+    transition:.4s;
+}
+
+#profile-photo:hover{
+    transform:scale(1.08);
+}
+
+.profile-card h2{
+    margin-top:10px;
+    margin-bottom:8px;
+    color:white;
+}
+
+.profile-card p{
+    color:#a0b4c8;
+}
+
+.dashboard{
+    display:none;
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+
+    background:#0d1d2d;
+
+    padding:30px 20px;
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+    border-right:1px solid rgba(255,255,255,.1);
+}
+
+.sidebar h2{
+    color:#00d4ff;
+    margin-bottom:20px;
+}
+
+.sidebar button{
+    width:100%;
+    background:#10263b;
+    color:white;
+}
+
+.sidebar button:hover{
+    background:#00d4ff;
+    color:black;
+}
+
+.main-content{
+    margin-left:270px;
+    padding:30px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-bottom:20px;
+}
+
+.profile-card{
+    text-align:center;
+}
+
+#profile-photo{
+    width:140px;
+    height:140px;
+
+    border-radius:50%;
+    object-fit:cover;
+
+    border:4px solid #00d4ff;
+
+    margin-bottom:15px;
+
+    box-shadow:0 0 25px rgba(0,212,255,.4);
+}
+
+.card{
+    background:#10263b;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 0 20px rgba(0,212,255,.15);
+}
+
+#notification{
+    display:none;
+
+    background:#00d4ff;
+    color:black;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    font-weight:bold;
+
+    animation:slideDown .4s ease;
+}
+
+@keyframes slideDown{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+#user-qr{
+    width:180px;
+    background:white;
+    padding:10px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+/* Login Modal */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,.7);
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+}
+
+.modal-content{
+
+    background:#10263b;
+
+    width:400px;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 0 40px rgba(0,212,255,.4);
+
+    animation:popup .3s;
+}
+
+.modal-content h2{
+
+    color:#00d4ff;
+
+    margin-bottom:20px;
+
+    text-align:center;
+}
+
+.modal-content input{
+
+    width:100%;
+
+    margin:12px 0;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:16px;
+}
+
+.close{
+
+    float:right;
+
+    cursor:pointer;
+
+    font-size:30px;
+
+    color:white;
+}
+
+.close:hover{
+
+    color:#00d4ff;
+}
+
+@keyframes popup{
+
+from{
+
+transform:scale(.8);
+
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}

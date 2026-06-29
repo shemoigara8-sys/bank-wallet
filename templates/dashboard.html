@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard | K Wallet
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<div id="notification"></div>
+
+<div class="row">
+
+    <!-- LEFT SIDE -->
+
+    <div class="col-lg-4">
+
+        <div class="card shadow p-4 text-center">
+
+            <img
+            id="profile-photo"
+            src="/static/uploads/default.png"
+            class="rounded-circle mx-auto mb-3"
+            width="150"
+            height="150"
+            style="object-fit:cover;">
+
+            <h3 id="welcome">
+                Loading...
+            </h3>
+
+            <p id="account"></p>
+
+            <input
+            class="form-control mt-3"
+            type="file"
+            id="photoInput">
+
+            <button
+            class="btn btn-info mt-3"
+            onclick="uploadPhoto()">
+
+                Upload Photo
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="col-lg-8">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="card p-4 text-center shadow">
+
+                    <h5>Balance</h5>
+
+                    <h2 id="balance">
+                        KES 0
+                    </h2>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card p-4 text-center shadow">
+
+                    <h5>Total Sent</h5>
+
+                    <h2 id="total-sent">
+                        KES 0
+                    </h2>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card p-4 text-center shadow">
+
+                    <h5>Total Received</h5>
+
+                    <h2 id="total-received">
+                        KES 0
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+<div class="card shadow p-4 mt-4">
+
+    <h3 class="mb-4">
+        💸 Send Money
+    </h3>
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <input
+            type="text"
+            id="receiver"
+            class="form-control"
+            placeholder="Receiver Account Number">
+
+        </div>
+
+        <div class="col-md-4">
+
+            <input
+            type="number"
+            id="amount"
+            class="form-control"
+            placeholder="Amount">
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button
+            class="btn btn-info w-100"
+            onclick="sendMoney()">
+
+                Send
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="card shadow p-4 mt-4">
+
+    <h3 class="mb-4">
+        Recent Transactions
+    </h3>
+
+    <div id="history">
+
+        <p class="text-muted">
+            No transactions yet.
+        </p>
+
+    </div>
+
+</div>
+{% endblock %}

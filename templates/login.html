@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login - K Wallet
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+<div class="container">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-5">
+
+<div class="card p-5">
+
+<h2 class="text-center mb-4">
+
+Welcome Back
+
+</h2>
+
+<p class="text-center mb-4">
+
+Login to your K Wallet account
+
+</p>
+
+<input
+type="text"
+id="loginAccount"
+class="form-control mb-3"
+placeholder="Account Number">
+
+<input
+type="password"
+id="loginPin"
+class="form-control mb-4"
+placeholder="PIN">
+
+<button
+class="btn btn-info w-100"
+onclick="loginUser()">
+
+Login
+
+</button>
+
+<div class="text-center mt-4">
+
+Don't have an account?
+
+<a href="/register-page">
+
+Create one
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>K Wallet</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeLogin()">&times;</span>
+
+        <h2>Login to K Wallet</h2>
+
+        <input
+        type="text"
+        id="loginAccount"
+        placeholder="Account Number">
+
+        <input
+        type="password"
+        id="loginPin"
+        placeholder="PIN">
+
+        <button class="primary" onclick="openLogin()">Login</button>
+
+    </div>
+
+</div>
+<body>
+
+<header>
+<div class="logo">K Wallet</div>
+
+<div>
+<button onclick="registerUser()">Register</button>
+<button class="primary" onclick="loginUser()">Login</button>
+</div>
+</header>
+
+<section class="hero" id="hero">
+
+<h1>
+Pay Smarter.
+<span>Live Better.</span>
+</h1>
+
+<p>
+Fast, secure and reliable digital payments for Kenya.
+</p>
+
+<img
+src="{{ url_for('static', filename='images/hero1.jpg') }}"
+alt="K Wallet User"
+class="hero-image">
+
+<img src="{{ url_for('static', filename='uploads/k-wallet-poster.png') }}" alt="K Wallet Poster">
+
+
+
+</section>
+<section class="dashboard" id="dashboard">
+
+<div class="sidebar">
+
+    <h2>K Wallet</h2>
+
+    <button>Dashboard</button>
+    <button>Send Money</button>
+    <button>Transactions</button>
+    <button>Profile</button>
+
+    <button onclick="logoutUser()">
+        Logout
+    </button>
+
+</div>
+
+<div class="main-content">
+
+<div id="notification"></div>
+
+    <div class="stats">
+
+<div class="card">
+    <h3>Balance</h3>
+    <h1 id="balance"></h1>
+</div>
+
+<div class="card">
+    <h3>Account</h3>
+    <h2 id="account"></h2>
+</div>
+
+<div class="card">
+    <h3>Total Sent</h3>
+    <h2 id="total-sent"></h2>
+</div>
+
+<div class="card">
+    <h3>Total Received</h3>
+    <h2 id="total-received"></h2>
+</div>
+
+</div>
+
+    <div class="card profile-card">
+
+        <img
+        id="profile-photo"
+        src="/static/uploads/default.png"
+        alt="Profile Picture">
+
+        <input type="file" id="photoInput">
+
+        <button onclick="uploadPhoto()">
+            Upload Photo
+        </button>
+
+        <h2 id="welcome"></h2>
+       <h3>Your QR Code</h3>
+
+<img
+id="user-qr"
+src="/qr"
+alt="QR Code">
+
+    </div>
+
+    <div class="card">
+
+        <h2>Send Money</h2>
+
+        <input
+        id="receiver"
+        placeholder="Receiver Account">
+
+        <input
+        id="amount"
+        placeholder="Amount">
+
+        <button
+        class="primary"
+        onclick="sendMoney()">
+            Send
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Transactions</h2>
+
+        <div id="history"></div>
+
+    </div>
+
+</div>
+
+</section>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}
+K Wallet | Smart Digital Payments
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section id="hero" class="hero">
+    <!-- Hero content -->
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features py-5">
+    <!-- Features content -->
+</section>
+
+<!-- STATISTICS -->
+<section class="stats-section py-5">
+    <!-- Statistics content -->
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials py-5">
+
+<div class="container">
+
+<h2 class="text-center mb-5">
+Trusted by Kenyans
+</h2>
+
+<div class="row g-4">
+
+<div class="col-lg-4">
+
+<div class="testimonial-card">
+
+<img
+src="{{ url_for('static', filename='images/user1.jpg') }}"
+alt="Brian">
+
+<h4 class="mt-3">
+Brian Mwangi
+</h4>
+
+<p>
+"K Wallet makes sending money incredibly easy."
+</p>
+
+<div class="stars">
+★★★★★
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="testimonial-card">
+
+<img
+src="{{ url_for('static', filename='images/user2.jpg') }}"
+alt="Faith">
+
+<h4 class="mt-3">
+Faith Achieng
+</h4>
+
+<p>
+"The QR payment feature is amazing."
+</p>
+
+<div class="stars">
+★★★★★
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="testimonial-card">
+
+<img
+src="{{ url_for('static', filename='images/user3.jpg') }}"
+alt="James">
+
+<h4 class="mt-3">
+James Mutiso
+</h4>
+
+<p>
+"I recommend K Wallet to everyone."
+</p>
+
+<div class="stars">
+★★★★★
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}

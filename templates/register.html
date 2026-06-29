@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register - K Wallet
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+<div class="container">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-5">
+
+<div class="card p-5">
+
+<h2 class="text-center mb-4">
+
+Create Account
+
+</h2>
+
+<p class="text-center mb-4">
+
+Join K Wallet today
+
+</p>
+
+<input
+type="text"
+id="registerUsername"
+class="form-control mb-3"
+placeholder="Username">
+
+<input
+type="password"
+id="registerPin"
+class="form-control mb-4"
+placeholder="PIN">
+
+<button
+class="btn btn-info w-100"
+onclick="registerUser()">
+
+Create Account
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}

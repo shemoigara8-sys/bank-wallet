@@ -1,0 +1,319 @@
+```css
+/* ==========================
+   K Wallet Admin v4
+========================== */
+
+body{
+    background:#f4f7fb;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* Sidebar */
+
+.sidebar{
+
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:250px;
+    height:100vh;
+
+    background:#0f172a;
+
+    color:#fff;
+
+    padding:30px 20px;
+
+    overflow-y:auto;
+
+}
+
+.sidebar h2{
+
+    color:#38bdf8;
+
+    margin-bottom:40px;
+
+    text-align:center;
+
+}
+
+.sidebar a{
+
+    display:block;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:14px 18px;
+
+    margin-bottom:10px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+.sidebar a:hover{
+
+    background:#38bdf8;
+
+    color:#111827;
+
+    transform:translateX(6px);
+
+}
+
+/* Main */
+
+.main{
+
+    margin-left:270px;
+
+    padding:40px;
+
+}
+
+/* Premium Stat Cards */
+
+.stat-card{
+
+    color:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+    transition:.3s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.20);
+
+}
+
+.users{
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+}
+
+.transactions{
+
+    background:linear-gradient(135deg,#10b981,#34d399);
+
+}
+
+.money{
+
+    background:linear-gradient(135deg,#f59e0b,#fbbf24);
+
+}
+
+.stat-card .icon{
+
+    font-size:40px;
+
+    margin-bottom:20px;
+
+}
+
+.stat-card h1{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    margin:10px 0;
+
+}
+
+.stat-card small{
+
+    opacity:.9;
+
+}
+
+/* Cards */
+
+.card{
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.card-header{
+
+    background:white;
+
+    border-bottom:1px solid #eee;
+
+    font-weight:bold;
+
+}
+
+/* Tables */
+
+.table th{
+
+    background:#0f172a;
+
+    color:white;
+
+}
+
+.table tbody tr:hover{
+
+    background:#eef6ff;
+
+}
+
+/* Charts */
+
+canvas{
+
+    max-width:100%;
+
+}
+
+/* Responsive */
+
+@media(max-width:992px){
+
+    .sidebar{
+
+        position:relative;
+
+        width:100%;
+
+        height:auto;
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+        padding:20px;
+
+    }
+
+}
+```
+
+/* ==========================
+   Top Navigation
+========================== */
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.top-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.search-box{
+
+    border:none;
+
+    outline:none;
+
+    background:white;
+
+    padding:10px 15px;
+
+    width:250px;
+
+    border-radius:10px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.icon-btn{
+
+    border:none;
+
+    background:white;
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.icon-btn:hover{
+
+    transform:scale(1.1);
+
+}
+
+.admin-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:white;
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.admin-profile img{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
