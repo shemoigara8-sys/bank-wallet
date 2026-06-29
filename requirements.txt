@@ -12,3 +12,4 @@ qrcode==8.2
 SQLAlchemy==2.0.51
 typing_extensions==4.15.0
 Werkzeug==3.1.8
+python-dotenv==1.0.0

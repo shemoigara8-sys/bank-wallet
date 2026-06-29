@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Settings | K Wallet
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Settings</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <h5>Privacy & Security</h5>
+                            <p class="text-muted">Manage your security settings</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <h5>Notifications</h5>
+                            <p class="text-muted">Configure notification preferences</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <h5>Account Information</h5>
+                            <p class="text-muted">View and edit your account details</p>
+                        </a>
+                        <a href="/logout" class="list-group-item list-group-item-action text-danger">
+                            <h5>Logout</h5>
+                            <p class="text-muted">Sign out of your account</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

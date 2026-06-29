@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+Transaction Receipt | K Wallet
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Transaction Receipt</h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <h5 id="status" class="text-success">✓ Successful</h5>
+                    </div>
+                    
+                    <div class="receipt-item">
+                        <span>From:</span>
+                        <span id="fromAccount">-</span>
+                    </div>
+                    
+                    <div class="receipt-item">
+                        <span>To:</span>
+                        <span id="toAccount">-</span>
+                    </div>
+                    
+                    <div class="receipt-item">
+                        <span>Amount:</span>
+                        <span id="amount" class="fw-bold">-</span>
+                    </div>
+                    
+                    <div class="receipt-item">
+                        <span>Date & Time:</span>
+                        <span id="dateTime">-</span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <button class="btn btn-primary w-100" onclick="window.print()">Print Receipt</button>
+                    <a href="/dashboard" class="btn btn-secondary w-100 mt-2">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .receipt-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+{% endblock %}

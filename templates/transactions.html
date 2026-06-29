@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+Transaction History | K Wallet
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Transaction History</h3>
+                </div>
+                <div class="card-body">
+                    <div id="transactionsContainer">
+                        <p class="text-muted">Loading transactions...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function loadTransactions() {
+        fetch('/history')
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById('transactionsContainer');
+                
+                if (data.length === 0) {
+                    container.innerHTML = '<p class="text-muted">No transactions yet</p>';
+                    return;
+                }
+                
+                let html = '<table class="table table-hover"><thead><tr><th>From</th><th>To</th><th>Amount</th><th>Date</th></tr></thead><tbody>';
+                
+                data.forEach(tx => {
+                    html += `<tr>
+                        <td>${tx.from}</td>
+                        <td>${tx.to}</td>
+                        <td class="text-success fw-bold">KES ${parseFloat(tx.amount).toFixed(2)}</td>
+                        <td>${tx.date}</td>
+                    </tr>`;
+                });
+                
+                html += '</tbody></table>';
+                container.innerHTML = html;
+            })
+            .catch(err => {
+                document.getElementById('transactionsContainer').innerHTML = '<p class="alert alert-danger">Error loading transactions</p>';
+                console.error('Error:', err);
+            });
+    }
+    
+    loadTransactions();
+    // Refresh every 30 seconds
+    setInterval(loadTransactions, 30000);
+</script>
+{% endblock %}

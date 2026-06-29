@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile | K Wallet
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Profile Settings</h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img id="profilePhoto" src="" alt="Profile" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Upload Photo</label>
+                        <input type="file" class="form-control" id="photoInput" accept="image/*">
+                        <button class="btn btn-primary mt-2" onclick="uploadPhoto()">Upload</button>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Account Number</label>
+                        <input type="text" class="form-control" id="accountNumber" readonly>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" readonly>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Current Balance</label>
+                        <input type="text" class="form-control" id="balance" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function loadProfile() {
+        fetch('/balance')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('accountNumber').value = data.account;
+                document.getElementById('username').value = data.username;
+                document.getElementById('balance').value = 'KES ' + data.balance.toFixed(2);
+                if (data.photo && data.photo !== 'default.png') {
+                    document.getElementById('profilePhoto').src = '/static/uploads/' + data.photo;
+                }
+            })
+            .catch(err => console.error('Error loading profile:', err));
+    }
+    
+    function uploadPhoto() {
+        const fileInput = document.getElementById('photoInput');
+        if (!fileInput.files.length) {
+            alert('Please select a photo');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('photo', fileInput.files[0]);
+        
+        fetch('/upload_photo', {
+            method: 'POST',
+            body: formData
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.filename) {
+                document.getElementById('profilePhoto').src = '/static/uploads/' + data.filename;
+                alert('Photo uploaded successfully!');
+            }
+        })
+        .catch(err => console.error('Error uploading photo:', err));
+    }
+    
+    loadProfile();
+</script>
+{% endblock %}
