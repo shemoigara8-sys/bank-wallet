@@ -155,19 +155,32 @@ def admin_login():
     username = data.get("username")
     password = data.get("password")
 
+    if not username or not password:
+        return jsonify({
+            "error": "Username and password are required"
+        }), 400
+
     admin = Admin.query.filter_by(
         username=username
     ).first()
+
+    # Create default admin if doesn't exist
+    if not admin and username == "admin" and password == "admin123":
+        admin = Admin(username="admin")
+        admin.set_password("admin123")
+        db.session.add(admin)
+        db.session.commit()
+        session["admin"] = admin.username
+        return jsonify({
+            "message": "Admin login successful"
+        })
 
     if admin is None:
         return jsonify({
             "error": "Invalid username or password"
         }), 401
 
-    if not check_password_hash(
-        admin.password,
-        password
-    ):
+    if not admin.check_password(password):
         return jsonify({
             "error": "Invalid username or password"
         }), 401
