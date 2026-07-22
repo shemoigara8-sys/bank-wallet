@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}
+M-Pesa Transactions | K Wallet
+{% endblock %}
+
+{% block content %}
+
+<style>
+.transactions-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.transactions-card {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.transactions-table th {
+    background: #f5f5f5;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+}
+
+.transactions-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.transactions-table tr:hover {
+    background: #f9f9f9;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge.failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.type-deposit {
+    color: #00a86b;
+    font-weight: bold;
+}
+
+.type-withdraw {
+    color: #d9534f;
+    font-weight: bold;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+</style>
+
+<div class="transactions-container">
+    <div class="transactions-card">
+        <h2>💳 M-Pesa Transactions</h2>
+        
+        <div style="overflow-x: auto;">
+            <table class="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Phone</th>
+                        <th>Reference</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="transactions-body">
+                    <tr>
+                        <td colspan="6" class="empty-state">Loading transactions...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+function loadTransactions() {
+    fetch('/api/mpesa/transactions')
+    .then(r => r.json())
+    .then(data => {
+        const tbody = document.getElementById('transactions-body');
+        
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No M-Pesa transactions yet</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = data.map(tx => `
+            <tr>
+                <td><span class="type-${tx.type}">${tx.type === 'deposit' ? '📥 Deposit' : '📤 Withdraw'}</span></td>
+                <td>KES ${tx.amount.toFixed(2)}</td>
+                <td>${tx.phone}</td>
+                <td><code>${tx.reference}</code></td>
+                <td><span class="badge ${tx.status}">${tx.status.toUpperCase()}</span></td>
+                <td>${tx.date}</td>
+            </tr>
+        `).join('');
+    })
+    .catch(err => {
+        console.error('Error loading transactions:', err);
+        document.getElementById('transactions-body').innerHTML = '<tr><td colspan="6" class="empty-state" style="color: red;">Error loading transactions</td></tr>';
+    });
+}
+
+// Load on page load and refresh every 10 seconds
+loadTransactions();
+setInterval(loadTransactions, 10000);
+</script>
+
+{% endblock %}

@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+
+{% block title %}
+M-Pesa | K Wallet
+{% endblock %}
+
+{% block content %}
+
+<style>
+.mpesa-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.mpesa-card {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.mpesa-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.mpesa-tab {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.mpesa-tab.active {
+    color: #00a86b;
+    border-bottom-color: #00a86b;
+}
+
+.mpesa-form-group {
+    margin-bottom: 20px;
+}
+
+.mpesa-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.mpesa-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.mpesa-form-group input:focus {
+    outline: none;
+    border-color: #00a86b;
+    box-shadow: 0 0 5px rgba(0, 168, 107, 0.3);
+}
+
+.mpesa-btn {
+    background: linear-gradient(135deg, #00a86b 0%, #008c4a 100%);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.2s;
+}
+
+.mpesa-btn:hover {
+    transform: translateY(-2px);
+}
+
+.mpesa-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mpesa-info {
+    background: #f0f9f6;
+    border-left: 4px solid #00a86b;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.mpesa-success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.mpesa-error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.mpesa-status {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.mpesa-status.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.mpesa-status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.mpesa-status.failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.mpesa-demo {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #1565c0;
+    font-size: 14px;
+}
+</style>
+
+<div class="mpesa-container">
+    <div class="mpesa-card">
+        <h2>💳 M-Pesa Integration</h2>
+        
+        <div class="mpesa-demo">
+            <strong>🔍 DEMO MODE:</strong> This is a demonstration. In production with real M-Pesa credentials, actual payments will be processed.
+        </div>
+
+        <div class="mpesa-tabs">
+            <button class="mpesa-tab active" onclick="switchTab('deposit')">Deposit</button>
+            <button class="mpesa-tab" onclick="switchTab('withdraw')">Withdraw</button>
+        </div>
+
+        <!-- Deposit Tab -->
+        <div id="deposit-tab" class="mpesa-tab-content">
+            <h3>Deposit Money from M-Pesa</h3>
+            
+            <div class="mpesa-info">
+                📄 Enter your M-Pesa phone number and amount to deposit money into your K Wallet.
+            </div>
+
+            <div id="deposit-message"></div>
+
+            <div class="mpesa-form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="deposit-phone" placeholder="254712345678" required>
+            </div>
+
+            <div class="mpesa-form-group">
+                <label>Amount (KES)</label>
+                <input type="number" id="deposit-amount" placeholder="1000" min="1" max="150000" step="0.01" required>
+            </div>
+
+            <button class="mpesa-btn" onclick="initiateDeposit()">Deposit via M-Pesa</button>
+        </div>
+
+        <!-- Withdraw Tab -->
+        <div id="withdraw-tab" class="mpesa-tab-content" style="display: none;">
+            <h3>Withdraw to M-Pesa</h3>
+            
+            <div class="mpesa-info">
+                📄 Enter your M-Pesa phone number and amount to withdraw from your K Wallet.
+            </div>
+
+            <div id="withdraw-message"></div>
+
+            <div class="mpesa-form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="withdraw-phone" placeholder="254712345678" required>
+            </div>
+
+            <div class="mpesa-form-group">
+                <label>Amount (KES)</label>
+                <input type="number" id="withdraw-amount" placeholder="1000" min="1" max="150000" step="0.01" required>
+            </div>
+
+            <button class="mpesa-btn" onclick="initiateWithdraw()">Withdraw via M-Pesa</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchTab(tab) {
+    // Hide all tabs
+    document.getElementById('deposit-tab').style.display = 'none';
+    document.getElementById('withdraw-tab').style.display = 'none';
+    
+    // Remove active class
+    document.querySelectorAll('.mpesa-tab').forEach(t => t.classList.remove('active'));
+    
+    // Show selected tab
+    document.getElementById(tab + '-tab').style.display = 'block';
+    event.target.classList.add('active');
+}
+
+function initiateDeposit() {
+    const phone = document.getElementById('deposit-phone').value;
+    const amount = parseFloat(document.getElementById('deposit-amount').value);
+    const msgDiv = document.getElementById('deposit-message');
+    
+    if (!phone || !amount) {
+        msgDiv.innerHTML = '<div class="mpesa-error" style="display: block;">Please enter phone number and amount</div>';
+        return;
+    }
+    
+    fetch('/api/mpesa/deposit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({phone_number: phone, amount: amount})
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.error) {
+            msgDiv.innerHTML = `<div class="mpesa-error" style="display: block;">${data.error}</div>`;
+        } else {
+            msgDiv.innerHTML = `
+                <div class="mpesa-success" style="display: block;">
+                    <strong>✓ STK Push Sent!</strong><br>
+                    Reference: ${data.reference}<br>
+                    Amount: KES ${data.amount}
+                </div>
+            `;
+            
+            // Show confirm button
+            msgDiv.innerHTML += `
+                <button class="mpesa-btn" style="margin-top: 10px;" onclick="confirmDeposit(${data.transaction_id})">✓ Confirm Payment</button>
+            `;
+        }
+    })
+    .catch(err => {
+        msgDiv.innerHTML = '<div class="mpesa-error" style="display: block;">Error initiating deposit</div>';
+        console.error(err);
+    });
+}
+
+function confirmDeposit(txId) {
+    fetch(`/api/mpesa/confirm/${txId}`, {method: 'POST'})
+    .then(r => r.json())
+    .then(data => {
+        const msgDiv = document.getElementById('deposit-message');
+        msgDiv.innerHTML = `
+            <div class="mpesa-success" style="display: block;">
+                <strong>✓ Deposit Successful!</strong><br>
+                ${data.message}<br>
+                New Balance: KES ${data.new_balance.toFixed(2)}
+            </div>
+        `;
+        document.getElementById('deposit-phone').value = '';
+        document.getElementById('deposit-amount').value = '';
+        
+        // Reload balance
+        setTimeout(() => location.reload(), 2000);
+    })
+    .catch(err => console.error(err));
+}
+
+function initiateWithdraw() {
+    const phone = document.getElementById('withdraw-phone').value;
+    const amount = parseFloat(document.getElementById('withdraw-amount').value);
+    const msgDiv = document.getElementById('withdraw-message');
+    
+    if (!phone || !amount) {
+        msgDiv.innerHTML = '<div class="mpesa-error" style="display: block;">Please enter phone number and amount</div>';
+        return;
+    }
+    
+    fetch('/api/mpesa/withdraw', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({phone_number: phone, amount: amount})
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.error) {
+            msgDiv.innerHTML = `<div class="mpesa-error" style="display: block;">${data.error}</div>`;
+        } else {
+            msgDiv.innerHTML = `
+                <div class="mpesa-success" style="display: block;">
+                    <strong>✓ Withdrawal Initiated!</strong><br>
+                    Reference: ${data.reference}<br>
+                    Amount: KES ${data.amount}
+                </div>
+            `;
+            
+            // Show confirm button
+            msgDiv.innerHTML += `
+                <button class="mpesa-btn" style="margin-top: 10px;" onclick="confirmWithdraw(${data.transaction_id})">✓ Confirm Withdrawal</button>
+            `;
+        }
+    })
+    .catch(err => {
+        msgDiv.innerHTML = '<div class="mpesa-error" style="display: block;">Error initiating withdrawal</div>';
+        console.error(err);
+    });
+}
+
+function confirmWithdraw(txId) {
+    fetch(`/api/mpesa/confirm-withdraw/${txId}`, {method: 'POST'})
+    .then(r => r.json())
+    .then(data => {
+        const msgDiv = document.getElementById('withdraw-message');
+        msgDiv.innerHTML = `
+            <div class="mpesa-success" style="display: block;">
+                <strong>✓ Withdrawal Successful!</strong><br>
+                ${data.message}<br>
+                New Balance: KES ${data.new_balance.toFixed(2)}
+            </div>
+        `;
+        document.getElementById('withdraw-phone').value = '';
+        document.getElementById('withdraw-amount').value = '';
+        
+        // Reload balance
+        setTimeout(() => location.reload(), 2000);
+    })
+    .catch(err => console.error(err));
+}
+</script>
+
+{% endblock %}

@@ -111,3 +111,62 @@ class Admin(db.Model):
     def check_password(self, password):
         """Verify admin password"""
         return check_password_hash(self.password, password)
+
+
+class MpesaTransaction(db.Model):
+    """M-Pesa transaction model"""
+    __tablename__ = "mpesa_transactions"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_account = db.Column(
+        db.String(20),
+        nullable=False
+    )
+
+    phone_number = db.Column(
+        db.String(15),
+        nullable=False
+    )
+
+    transaction_type = db.Column(
+        db.String(20),  # 'deposit' or 'withdraw'
+        nullable=False
+    )
+
+    amount = db.Column(
+        db.Float,
+        nullable=False
+    )
+
+    status = db.Column(
+        db.String(20),  # 'pending', 'success', 'failed'
+        default='pending'
+    )
+
+    mpesa_reference = db.Column(
+        db.String(100),
+        unique=True,
+        nullable=True
+    )
+
+    mpesa_receipt = db.Column(
+        db.String(100),
+        nullable=True
+    )
+
+    description = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow
+    )
