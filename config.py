@@ -1,6 +1,10 @@
-"""Application configuration"""
+"""Configuration with environment variable support"""
 import os
 from datetime import timedelta
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 class Config:
@@ -27,3 +31,6 @@ class Config:
     
     # Allowed file extensions for uploads
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    
+    # M-Pesa Configuration
+    MPESA_ENVIRONMENT = os.environ.get('MPESA_ENVIRONMENT', 'sandbox')
